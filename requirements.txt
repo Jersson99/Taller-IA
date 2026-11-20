@@ -1,0 +1,23 @@
+# Unidad 4 — Red Neuronal (PLN con Embeddings)
+tensorflow>=2.18.0,<2.22.0
+keras>=3.8.0
+numpy>=1.26.0
+pandas>=2.2.0
+scikit-learn>=1.5.0
+matplotlib>=3.9.0
+datasets>=3.0.0
+
+# Unidad 5 — Agente LangChain / LangGraph + Google Gemini
+langchain>=1.0.0
+langchain-core>=1.0.0
+langchain-google-genai>=4.0.0
+langchain-text-splitters>=1.0.0
+langgraph>=1.0.0
+langgraph-checkpoint>=3.0.0
+python-dotenv>=1.0.0
+
+# Interfaz Interactiva y Notebooks
+streamlit>=1.40.0
+ipykernel>=6.29.0
+nbformat>=5.10.0
+nbconvert>=7.16.0
