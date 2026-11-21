@@ -17,7 +17,6 @@ load_dotenv()
 
 st.set_page_config(
     page_title="Triaje Bancario Neuro-Agéntico · U4 + U5",
-    page_icon="🏦",
     layout="wide",
 )
 
@@ -78,7 +77,7 @@ caso_fallo = cargar_caso_fallo_referencia()
 # Encabezado
 # ---------------------------------------------------------------------------
 
-st.title("🏦 Sistema Neuro-Agéntico de Triaje PQRS Bancarias")
+st.title("Sistema Neuro-Agéntico de Triaje PQRS Bancarias")
 st.caption(
     "Integración Unidad 4 (Red Neuronal con Embeddings en Keras) + "
     "Unidad 5 (Agente LangGraph con 2 @tools, RAG + Reglas y Memoria por thread_id) · "
@@ -91,14 +90,14 @@ st.caption(
 # ---------------------------------------------------------------------------
 
 with st.sidebar:
-    st.header("🧠 Control de Sesión (Memoria)")
+    st.header("Control de Sesión (Memoria)")
     st.code(f"thread_id: {st.session_state.thread_id}", language="text")
-    if st.button("🔄 Reiniciar conversación (nuevo thread_id)", use_container_width=True):
+    if st.button("Reiniciar conversación (nuevo thread_id)", use_container_width=True):
         reiniciar_sesion()
         st.rerun()
 
     st.divider()
-    st.header("🧪 Casos de Prueba Rápidos")
+    st.header("Casos de Prueba Rápidos")
     st.caption("Haz clic en un caso para enviarlo directamente al agente:")
 
     ejemplos = {
@@ -126,7 +125,7 @@ with st.sidebar:
             prompt_rapido = texto_prompt
 
     st.divider()
-    st.header("🔬 Inferencia Directa (Red U4)")
+    st.header("Inferencia Directa (Red U4)")
     st.caption(
         f"Modelo activo: **{metadatos_u4.get('best_model_name', 'Embedding + LSTM')}** "
         f"(Accuracy test: **{metadatos_u4.get('best_test_accuracy', 0) * 100:.1f}%**)"
@@ -155,7 +154,7 @@ with st.sidebar:
 col_chat, col_panel = st.columns([1.45, 1.0], gap="large")
 
 with col_chat:
-    st.subheader("💬 Conversación con el Agente de Triaje")
+    st.subheader("Conversación con el Agente de Triaje")
 
     for turno in st.session_state.chat_history:
         with st.chat_message(turno["role"]):
@@ -163,13 +162,13 @@ with col_chat:
             if turno["role"] == "assistant":
                 tools_usadas = turno.get("nombres_herramientas", [])
                 if tools_usadas:
-                    badges = "  ".join(f"`🛠️ {t}`" for t in tools_usadas)
+                    badges = "  ".join(f"`{t}`" for t in tools_usadas)
                     st.caption(f"**Herramientas (@tool) invocadas:** {badges}")
                 else:
                     st.caption("**Herramientas (@tool) invocadas:** `Ninguna (respuesta directa)`")
 
                 if turno.get("herramientas_invocadas"):
-                    with st.expander("🔍 Ver traza técnica (tool_calls y salidas)"):
+                    with st.expander("Ver traza técnica (tool_calls y salidas)"):
                         for llamada in turno["herramientas_invocadas"]:
                             st.markdown(f"- **`{llamada['name']}`** — args: `{llamada['args']}`")
                         for nombre_t, salida_t in turno.get("salidas_herramientas", {}).items():
@@ -199,13 +198,13 @@ with col_chat:
 
             st.markdown(res["respuesta"])
             if res["nombres_herramientas"]:
-                badges = "  ".join(f"`🛠️ {t}`" for t in res["nombres_herramientas"])
+                badges = "  ".join(f"`{t}`" for t in res["nombres_herramientas"])
                 st.caption(f"**Herramientas (@tool) invocadas:** {badges}")
             else:
                 st.caption("**Herramientas (@tool) invocadas:** `Ninguna (respuesta directa)`")
 
             if res["herramientas_invocadas"]:
-                with st.expander("🔍 Ver traza técnica (tool_calls y salidas)"):
+                with st.expander("Ver traza técnica (tool_calls y salidas)"):
                     for llamada in res["herramientas_invocadas"]:
                         st.markdown(f"- **`{llamada['name']}`** — args: `{llamada['args']}`")
                     for nombre_t, salida_t in res["salidas_herramientas"].items():
@@ -225,7 +224,7 @@ with col_chat:
 
 
 with col_panel:
-    st.subheader("📊 Transparencia Técnica (Hemisferio U4)")
+    st.subheader("Transparencia Técnica (Hemisferio U4)")
 
     inf = st.session_state.ultima_inferencia_u4
     if inf is None:
@@ -241,11 +240,11 @@ with col_panel:
 
         if inf["requiere_escalamiento_baja_confianza"]:
             st.warning(
-                "⚠️ **Alerta de Gobernanza IA:** Confianza inferior al 65%. "
+                "**Alerta de Gobernanza IA:** Confianza inferior al 65%. "
                 "Las reglas de negocio ordenan escalamiento a **Analista Humano Nivel 2**."
             )
         else:
-            st.success("✅ Confianza suficiente para enrutamiento automático según SLA.")
+            st.success("Confianza suficiente para enrutamiento automático según SLA.")
 
         st.markdown("**Distribución Softmax por categoría:**")
         df_probs = pd.DataFrame(
@@ -258,7 +257,7 @@ with col_panel:
 
     if caso_fallo:
         st.divider()
-        with st.expander("📌 Referencia: Caso de Fallo Real (Sección 3 del README)"):
+        with st.expander("Referencia: Caso de Fallo Real (Sección 3 del README)"):
             st.write(f"**ID en conjunto de prueba:** `{caso_fallo['test_index']}`")
             st.write(f"**Texto:** _{caso_fallo['text']}_")
             st.write(f"**Categoría Real:** `{caso_fallo['true_label']}`")
